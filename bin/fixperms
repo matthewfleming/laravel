@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#### BEGIN CONFIG ################
+webWrite="bootstrap/cache storage"
+#### END CONFIG ##################
+
+name=$(basename "$0")
+binDir=$(dirname $(readlink -f "$0"))
+baseDir=$(dirname "$binDir")
+
+if [ $# -ne 1 ]; then
+	echo "Usage: $name GROUP-NAME"
+    echo "Set write permissions for current user and minimal read/write for web server group GROUP-NAME (e.g. www-data)"
+	exit 1;
+fi
+ 
+owner=$(whoami)
+group="$1"
+
+cd "$baseDir"
+echo "Setting owner/group"
+sudo chown -R "$owner:$group" .
+echo "Resetting permissions"
+sudo chmod -R 777 .
+echo "Setting web read permissions"
+find . -type f -exec chmod 644 {} \;
+find . -type d -exec chmod 755 {} \;
+echo "Setting web write permissions"
+find $webWrite -type d -exec chmod 775 {} \;
+find $webWrite  -type f -exec chmod 664 {} \;
+echo "Setting execute permisions"
+chmod 744 bin/*

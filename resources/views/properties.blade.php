@@ -16,28 +16,28 @@
         </h4>
         <ul class="list-group mb-3">
             <li class="list-group-item">
-                <h6>The Excepteur</h6>
+                <h6>{{$featured->name}}</h6>
                 <table class="table table-sm table-striped">
                     <tbody>
                         <tr>
                             <th scope="row">Price</th>
-                            <td>$100,000</td>
+                            <td>${{$featured->formattedPrice()}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Bed</th>
-                            <td>4</td>
+                            <td>{{$featured->bedrooms}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Bath</th>
-                            <td>2</td>
+                            <td>{{$featured->bathrooms}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Garage</th>
-                            <td>2</td>
+                            <td>{{$featured->garages}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Storeys</th>
-                            <td>2</td>
+                            <td>{{$featured->storeys}}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -46,31 +46,31 @@
     </div>
     <div class="col-md-8 order-md-1">
         <h4 class="mb-3">Property Search</h4>
-        <form>
+        <form id="form">
          <div class="row">
                 <div class="col-md-4 mb-3">
                     <label for="price-min">Price (min)</label>
-                    <select class="custom-select d-block w-100" id="price-min">
+                    <select class="custom-select d-block w-100" name="price-min">
                         <option value="">Any</option>
-                        <option>$200,000</option>
-                        <option>$300,000</option>
-                        <option>$400,000</option>
-                        <option>$500,000</option>
+                        <option value="200000">$200,000</option>
+                        <option value="300000">$300,000</option>
+                        <option value="400000">$400,000</option>
+                        <option value="500000">$500,000</option>
                     </select>
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="price-max">Price (max)</label>
-                    <select class="custom-select d-block w-100" id="price-max">
+                    <select class="custom-select d-block w-100" name="price-max">
                         <option value="">Any</option>
-                        <option>$300,000</option>
-                        <option>$400,000</option>
-                        <option>$500,000</option>
-                        <option>$600,000</option>
+                        <option value="300000">$300,000</option>
+                        <option value="400000">$400,000</option>
+                        <option value="500000">$500,000</option>
+                        <option value="600000">$600,000</option>
                     </select>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <label for="beds-min">Beds (min)</label>
-                    <select class="custom-select d-block w-100" id="beds-min">
+                    <label for="bedrooms-min">Beds (min)</label>
+                    <select class="custom-select d-block w-100" name="bedrooms-min">
                         <option value="">Any</option>
                         <option>1</option>
                         <option>2</option>
@@ -80,8 +80,8 @@
                     </select>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <label for="beds-max">Beds (max)</label>
-                    <select class="custom-select d-block w-100" id="beds-max">
+                    <label for="bedrooms-max">Beds (max)</label>
+                    <select class="custom-select d-block w-100" name="bedrooms-max">
                         <option value="">Any</option>
                         <option>1</option>
                         <option>2</option>
@@ -93,8 +93,8 @@
             </div>
             <div class="row">
                 <div class="col-md-2 mb-3">
-                    <label for="bath-min">Bath (min)</label>
-                    <select class="custom-select d-block w-100" id="bath-min">
+                    <label for="bathrooms-min">Bath (min)</label>
+                    <select class="custom-select d-block w-100" name="bathrooms-min">
                         <option value="">Any</option>
                         <option>1</option>
                         <option>2</option>
@@ -104,8 +104,8 @@
                     </select>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <label for="bath-max">Bath (max)</label>
-                    <select class="custom-select d-block w-100" id="bath-max">
+                    <label for="bathrooms-max">Bath (max)</label>
+                    <select class="custom-select d-block w-100" name="bathrooms-max">
                         <option value="">Any</option>
                         <option>1</option>
                         <option>2</option>
@@ -115,8 +115,8 @@
                     </select>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <label for="garage-min">Garage (min)</label>
-                    <select class="custom-select d-block w-100" id="garage-min">
+                    <label for="garages-min">Garage (min)</label>
+                    <select class="custom-select d-block w-100" name="garages-min">
                         <option value="">Any</option>
                         <option>1</option>
                         <option>2</option>
@@ -126,8 +126,8 @@
                     </select>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <label for="garage-max">Garage (max)</label>
-                    <select class="custom-select d-block w-100" id="garage-max">
+                    <label for="garages-max">Garage (max)</label>
+                    <select class="custom-select d-block w-100" name="garages-max">
                         <option value="">Any</option>
                         <option>1</option>
                         <option>2</option>
@@ -137,8 +137,8 @@
                     </select>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <label for="storey-min">Storeys (min)</label>
-                    <select class="custom-select d-block w-100" id="storey-min">
+                    <label for="storeys-min">Storeys (min)</label>
+                    <select class="custom-select d-block w-100" name="storeys-min">
                         <option value="">Any</option>
                         <option>1</option>
                         <option>2</option>
@@ -148,8 +148,8 @@
                     </select>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <label for="storey-max">Storeys (max)</label>
-                    <select class="custom-select d-block w-100" id="storey-max">
+                    <label for="storeys-max">Storeys (max)</label>
+                    <select class="custom-select d-block w-100" name="storeys-max">
                         <option value="">Any</option>
                         <option>1</option>
                         <option>2</option>
@@ -162,9 +162,10 @@
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">Search</button>
         </form>
-        <div style="margin-top: 40px">
+        <div id="results" style="margin-top: 40px; display:none">
             <h4>Search Results</h4>
-            <table class="table table-striped">
+            <p id="no-result" style="display:none">Sorry, no properties matching your criteria were found</p>
+            <table class="table table-striped" id="result-table">
                 <thead>
                     <tr>
                         <th scope="col">Name</th>
@@ -175,18 +176,53 @@
                         <th scope="col">Storeys</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">The Xavier</th>
-                        <td>$623,324</td>
-                        <td>5</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>2</td>
-                    </tr>
+                <tbody id="result-body">
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script>
+        $(function() {
+            var form = $("#form");
+            var results = $("#results");
+            var resultTable = $('#result-table');
+            var resultBody = document.getElementById("result-body");
+            var noresult = $('#no-result');
+            form.submit(function(e) {
+                e.preventDefault();
+                var url = "/index.php/property/search";
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: form.serialize(),
+                    success: function(data) {
+                        resultBody.innerHTML = '';
+                        if(data.length === 0) {
+                            noresult.show();
+                            resultTable.hide();
+                            return;
+                        }
+                        noresult.hide();
+                        for(var index = 0; index < data.length; index++) {
+                            var row = document.createElement('tr');
+                            var properties = ['name', 'price', 'bedrooms', 'bathrooms', 'garages', 'storeys'];
+                            for(var i = 0; i < properties.length; i++) {
+                                var property = properties[i];
+                                var el = (property === 'name') ? document.createElement('th') : document.createElement('td');
+                                el.innerHTML = data[index][property];
+                                row.appendChild(el);
+                            }
+                            resultBody.appendChild(row);
+                        }
+                        results.show();
+                        resultTable.show();
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

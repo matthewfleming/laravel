@@ -196,8 +196,10 @@
             var resultTable = $('#result-table');
             var resultBody = document.getElementById("result-body");
             var noresult = $('#no-result');
+            var duration = 150;
             form.submit(function(e) {
                 e.preventDefault();
+                $.LoadingOverlay("show", {fade:duration});
                 var url = "/index.php/property/search";
                 $.ajax({
                     type: "GET",
@@ -208,6 +210,7 @@
                         if(data.length === 0) {
                             noresult.show();
                             resultTable.hide();
+                            $.LoadingOverlay("hide", {fade:duration});
                             return;
                         }
                         noresult.hide();
@@ -224,6 +227,7 @@
                         }
                         results.show();
                         resultTable.show();
+                        $.LoadingOverlay("hide", {fade:duration});
                     }
                 });
             });

@@ -32,7 +32,10 @@ class PropertyController extends Controller
                 $query->where($param, '<=', $max);
             }
         }
-
+        $name = $request->input('name');
+        if($name) {
+            $query->where('name', 'like', "%$name%");
+        }
         $result = $query->get();
         return response()->json($result);
     }

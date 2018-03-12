@@ -47,7 +47,11 @@
     <div class="col-md-8 order-md-1">
         <h4 class="mb-3">Property Search</h4>
         <form id="form">
-         <div class="row">
+            <div class="mb-3">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+            <div class="row">
                 <div class="col-md-4 mb-3">
                     <label for="price-min">Price (min)</label>
                     <select class="custom-select d-block w-100" name="price-min">

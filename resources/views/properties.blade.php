@@ -200,7 +200,7 @@
             form.submit(function(e) {
                 e.preventDefault();
                 $.LoadingOverlay("show", {fade:duration});
-                var url = "/index.php/property/search";
+                var url = "/property/search";
                 $.ajax({
                     type: "GET",
                     url: url,

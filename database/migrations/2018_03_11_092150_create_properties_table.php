@@ -22,6 +22,11 @@ class CreatePropertiesTable extends Migration
             $table->integer('storeys');
             $table->integer('garages');
             $table->timestamps();
+
+            // Create search indexes
+
+            $table->unique('name', 'unique_name');
+            $table->index(['name', 'price', 'bedrooms', 'bathrooms', 'storeys', 'garages']);            
         });
     }
 

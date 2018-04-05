@@ -166,10 +166,11 @@
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">Search</button>
         </form>
-        <div id="results" style="margin-top: 40px; display:none">
+        @verbatim
+        <div id="results" style="margin-top: 40px" class="invisible">
             <h4>Search Results</h4>
-            <p id="no-result" style="display:none">Sorry, no properties matching your criteria were found</p>
-            <table class="table table-striped" id="result-table">
+            <p id="no-result" v-if="results.properties.length === 0">Sorry, no properties matching your criteria were found</p>
+            <table class="table table-striped" id="result-table" v-else>
                 <thead>
                     <tr>
                         <th scope="col">Name</th>
@@ -181,56 +182,57 @@
                     </tr>
                 </thead>
                 <tbody id="result-body">
+                    <tr v-for="result in results.properties">
+                        <td>{{result.name}}</td>
+                        <td>{{result.price}}</td>
+                        <td>{{result.bedrooms}}</td>
+                        <td>{{result.bathrooms}}</td>
+                        <td>{{result.garages}}</td>
+                        <td>{{result.storeys}}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
+        @endverbatim
     </div>
 </div>
 @endsection
 
 @section('script')
-    <script>
-        $(function() {
-            var form = $("#form");
-            var results = $("#results");
-            var resultTable = $('#result-table');
-            var resultBody = document.getElementById("result-body");
-            var noresult = $('#no-result');
-            var duration = 150;
-            form.submit(function(e) {
-                e.preventDefault();
-                $.LoadingOverlay("show", {fade:duration});
-                var url = "/property/search";
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    data: form.serialize(),
-                    success: function(data) {
-                        resultBody.innerHTML = '';
-                        if(data.length === 0) {
-                            noresult.show();
-                            resultTable.hide();
-                            $.LoadingOverlay("hide", {fade:duration});
-                            return;
-                        }
-                        noresult.hide();
-                        for(var index = 0; index < data.length; index++) {
-                            var row = document.createElement('tr');
-                            var properties = ['name', 'price', 'bedrooms', 'bathrooms', 'garages', 'storeys'];
-                            for(var i = 0; i < properties.length; i++) {
-                                var property = properties[i];
-                                var el = (property === 'name') ? document.createElement('th') : document.createElement('td');
-                                el.innerHTML = data[index][property];
-                                row.appendChild(el);
-                            }
-                            resultBody.appendChild(row);
-                        }
-                        results.show();
-                        resultTable.show();
-                        $.LoadingOverlay("hide", {fade:duration});
-                    }
-                });
-            });
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script>
+$(function () {
+    var form = $("#form");
+    var duration = 150;
+    var results = {
+        hidden: true,
+        properties: []
+    };
+    var app = new Vue({
+        el: "#results",
+        data: {
+            results: results
+        }
+    });
+
+    form.submit(function (e) {
+        e.preventDefault();
+        $.LoadingOverlay("show", {fade: duration});
+        var url = "/property/search";
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: form.serialize(),
+            success: function (data) {
+                results.properties = data;
+                if (results.hidden) {
+                    document.getElementById('results').className = "";
+                    results.hidden = false;
+                }
+                $.LoadingOverlay("hide", {fade: duration});
+            }
         });
-    </script>
+    });
+});
+</script>
 @endsection
